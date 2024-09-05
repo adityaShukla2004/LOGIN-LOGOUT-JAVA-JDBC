@@ -70,6 +70,29 @@ public class UserOperation {
         return null;
     }
 
+    public void ShowData(){
+        String select_q = "select * from user";
+        try {
+            PreparedStatement stmt = con.prepareStatement(select_q);
+
+            ResultSet rs = stmt.executeQuery();
+
+            System.out.println("|+------------------------|--------------------------+|");
+            System.out.println("|            ID           |              NAME         |");
+            System.out.println("|+------------------------|--------------------------+|");
+
+
+            while (rs.next()) {
+                System.out.println("            "+ rs.getString("user_id")+"           |              "+rs.getString("name")+"  ");
+                
+                
+            }
+        } catch (Exception e) {
+           
+            e.printStackTrace();
+        }
+    }
+
     public boolean isExist(String email) throws SQLException, ClassNotFoundException {
         PreparedStatement stmt = con.prepareStatement("select * from User where email = ?");
 

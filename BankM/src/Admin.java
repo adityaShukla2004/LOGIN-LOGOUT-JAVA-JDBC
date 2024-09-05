@@ -13,12 +13,13 @@ public class Admin {
         String D_Dri = "com.mysql.jdbc.Driver";
         Scanner sc = new Scanner(System.in);
         Connection connection;
-        String login_email=null;
+        StringBuffer header = new StringBuffer();
        
         Class.forName(D_Dri);
         connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
         UserOperation user = new UserOperation (connection,sc);
+        boolean whileRunner=true;
 
         
 
@@ -35,10 +36,12 @@ public class Admin {
 
         System.out.println("BANK MANAGEMENT SYSTEM");
 
-        while (true) {
-            System.out.println( login_email+"\n"+"1 Register:");
+        while (whileRunner) {
+            System.out.println("USERNAME :    "+header);
+            System.out.println("1 Register:");
             System.out.println("2 Login");
             System.out.println("3 Log Out");
+            System.out.println("4 Show Data");
             System.out.println("5 Exit");
 
             System.out.println("Enter your Choice:");
@@ -58,23 +61,25 @@ public class Admin {
                     break;
 
                 case 2:
-                      login_email = user.Login();
+                      header.append(user.Login());
                     break;
 
                 case 3:
-
+                     header.delete( 0, header.capacity());
+                     System.out.println("Successfully Logout ");
                     break;
 
                 case 4:
-
+                      user.ShowData();
                     break;
                 case 5:
-
+                    whileRunner=false;
                     break;
 
                 default:
                     break;
             }
+            
            
         }
       
