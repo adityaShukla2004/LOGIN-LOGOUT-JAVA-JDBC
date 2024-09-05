@@ -16,7 +16,7 @@ public class UserOperation {
     }
 
     public void Register(String name, String email, String pass) throws Exception {
-        if (!isExist(email)) {
+        if (!isExist(email) && isEmail(email)) {
             try {
                 PreparedStatement stmt = con.prepareStatement("insert into User (name,email,password) values (?,?,?)");
                 stmt.setString(1, name);
@@ -47,6 +47,9 @@ public class UserOperation {
         System.out.println("Enter the Password:");
         String pass = sc.nextLine();
         String login_q = "select * from User where email=? and password=?";
+
+        
+
         try {
             PreparedStatement stmt = con.prepareStatement(login_q);
 
@@ -57,6 +60,7 @@ public class UserOperation {
             if (rs.next()) {
                 return email;
             } else {
+                System.out.println("USER NOT EXIST PLEASE ENTER CORRECT EMAIL AND PASSWORD");
                 return null;
             }
         } catch (Exception e) {
@@ -77,6 +81,15 @@ public class UserOperation {
             return true;
         } else
             return false;
+    }
+    
+    public boolean isEmail( String email){
+         if(email.contains("@") && email.contains("gmail.com"))
+         { 
+            return true;
+         }
+         System.out.println("Not valid email:");
+         return false;
     }
 
 }
